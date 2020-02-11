@@ -17,11 +17,6 @@ public class ButtonRenderer extends JButton implements TableCellRenderer {
 		setBorder(null);
 		setText("Delete");
 
-		addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("Hola!");
-			}
-		});
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,

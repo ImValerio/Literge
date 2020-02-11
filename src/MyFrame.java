@@ -259,6 +259,21 @@ public class MyFrame extends JFrame {
 				}
 			}
 		});
+		
+		table.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			 public void mouseClicked(java.awt.event.MouseEvent evt) {
+			    int col = table.columnAtPoint(evt.getPoint());
+			    int row = table.rowAtPoint(evt.getPoint());
+			    if (col == 4) {
+					Main.queue.remove(row);
+					TableModel dm = table.getModel();
+					((AbstractTableModel) dm).fireTableDataChanged();
+					pack();
+
+			    }
+			 }
+			});
 
 	}
 
