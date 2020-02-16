@@ -11,7 +11,6 @@ public class Main {
 		frame.pack();
 		frame.setVisible(true);
 		frame.setLocationRelativeTo(null); // centra la finestra
-
 	}
 
 	public static long getDimKb(long a) {

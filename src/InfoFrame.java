@@ -12,6 +12,7 @@ import java.io.File;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,6 +37,7 @@ public class InfoFrame extends JFrame {
 	private JRadioButton merge;
 	private JRadioButton crypt;
 	private JRadioButton zip;
+	JComboBox<String> unitM;
 	private JTextField fileName;
 	private JTextField fileParts;
 	private JTextField fileSize;
@@ -48,8 +50,10 @@ public class InfoFrame extends JFrame {
 		JPanel panel = new JPanel();
 		JPanel fieldsPanel = new JPanel();
 		JPanel btnPanel = new JPanel();
+		JPanel unitPanel = new JPanel();
 		fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.PAGE_AXIS));
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		unitPanel.setLayout(new BoxLayout(unitPanel, BoxLayout.X_AXIS));
 		split = new JRadioButton("Split");
 		merge = new JRadioButton("Merge");
 		crypt = new JRadioButton("Crypt");
@@ -61,8 +65,12 @@ public class InfoFrame extends JFrame {
 		MyButton save = new MyButton("Save");
 		JLabel lFileName = new JLabel("Output file name:");
 		lFileName.setAlignmentX(Component.LEFT_ALIGNMENT);
+		String[] unitMList = new String[] { "Byte", "KB", "MB", "GB" };
+
+		unitM = new JComboBox<>(unitMList);
+		unitM.setPreferredSize(new Dimension(76, 10));
 		JLabel lFileParts = new JLabel("File parts:");
-		JLabel lFileSize = new JLabel("File size(byte):");
+		JLabel lFileSize = new JLabel("File size:");
 
 		ButtonGroup typeG = new ButtonGroup();
 		ButtonGroup modeG = new ButtonGroup();
@@ -94,7 +102,10 @@ public class InfoFrame extends JFrame {
 		fieldsPanel.add(lFileParts);
 		fieldsPanel.add(fileParts);
 		fieldsPanel.add(lFileSize);
-		fieldsPanel.add(fileSize);
+		fieldsPanel.add(unitPanel);
+		unitPanel.add(fileSize);
+		unitPanel.add(unitM);
+		
 		fieldsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
 		fillFields();
@@ -284,8 +295,9 @@ public class InfoFrame extends JFrame {
 	 * quello appena generato
 	 */
 	public void modifyJob() {
-
+		int unit = 1;
 		Job tmp = new Job(Main.queue.get(row).getFile());
+		
 		if (getMerge().isSelected()) {
 			if (getZip().isSelected()) {
 				tmp.setMode(1);
@@ -314,13 +326,33 @@ public class InfoFrame extends JFrame {
 				}
 
 			} else {
+				switch (String.valueOf(unitM.getSelectedItem())) {
+				case "Byte":
+					unit = 1;
+					break;
+				case "KB":
+					unit = 1024;
+					break;
+				case "MB":
+					unit = 1024 * 1024;
+					break;
+				case "GB":
+					unit = 1024 * 1024 * 1024;
+					break;
+				}
 				try {
-					tmp.setDim(Long.parseLong(getFileSize().getText()));
+					if (Long.parseLong(getFileSize().getText()) * unit > tmp.getFile().length()) {
+						JOptionPane.showMessageDialog(null,
+								"Invalid file size! File size: " + Main.getHumanLength(tmp.getFile().length()));
+						return;
+					}
+					tmp.setDim(Long.parseLong(getFileSize().getText()) * unit);
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Invalid file size!");
+					JOptionPane.showMessageDialog(null, "Invalid file size! ");
 					return;
 				}
 			}
+			
 			Main.queue.set(row, tmp);
 
 		}
