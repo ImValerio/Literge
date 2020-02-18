@@ -69,14 +69,14 @@ public class Job {
 	}
 
 	/**
-	 * Restituisce se il Job è completato meno
+	 * Restituisce se il Job e' completato meno
 	 */
 	public boolean isCompleted() {
 		return completed;
 	}
 
 	/**
-	 * Imposta se il Job è completato meno
+	 * Imposta se il Job e' completato meno
 	 */
 	public void setCompleted(boolean completed) {
 		this.completed = completed;

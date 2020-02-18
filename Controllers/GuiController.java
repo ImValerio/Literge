@@ -131,8 +131,6 @@ public class GuiController {
 			public void actionPerformed(ActionEvent e) {
 				addQueue();
 				frame.pack();
-
-				// caseHandler();
 			}
 		});
 		frame.getStart().addActionListener(new ActionListener() {
@@ -168,7 +166,6 @@ public class GuiController {
 				int row = frame.getTable().rowAtPoint(evt.getPoint());
 				if (col == 4) {
 					Main.queue.remove(row);
-					Main.queueIndex--;
 					TableModel dm = frame.getTable().getModel();
 					((AbstractTableModel) dm).fireTableDataChanged();
 					frame.pack();
@@ -205,6 +202,7 @@ public class GuiController {
 					}
 					tmp.setOutFileName(frame.getFileName().getText());
 					Main.queue.add(0, tmp);
+					Main.queueIndex++;
 					TableModel dm = frame.getTable().getModel();
 					((AbstractTableModel) dm).fireTableDataChanged();
 
@@ -255,6 +253,7 @@ public class GuiController {
 					}
 
 					Main.queue.add(0, tmp);
+					Main.queueIndex++;
 					TableModel dm = frame.getTable().getModel();
 					((AbstractTableModel) dm).fireTableDataChanged();
 
@@ -274,17 +273,16 @@ public class GuiController {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} // TODO Errore divisione per zero
 		System.out.println("Queue size: " + Main.queue.size() + " index: " + Main.queueIndex);
-		int valueSingleJob = (100 / (Main.queue.size() - Main.queueIndex));
+		int valueSingleJob = (100 / (Main.queueIndex));
 		System.out.println(valueSingleJob);
 		for (int j = 0; j < Main.queue.size(); j++) {
 
 			Job tmp = Main.queue.get(j);
 			if (!tmp.isCompleted()) {
-				Main.queueIndex++;
+
 				String fileSelectedPath = Main.queue.get(j).getFile().getAbsolutePath();
 				SplitFile f = new SplitFile(fileSelectedPath);
 
@@ -341,11 +339,15 @@ public class GuiController {
 			}
 			frame.clearFields();
 			tmp.setStatus("Completed");
+
 			TableModel dm = frame.getTable().getModel();
 			((AbstractTableModel) dm).fireTableDataChanged();
 			frame.getPbar().setValue(frame.getPbar().getValue() + valueSingleJob);
 		}
-
+		if(frame.getPbar().getValue() < 100) {
+			frame.getPbar().setValue(100);
+		}
+		Main.queueIndex = 0;
 	}
 
 	/**

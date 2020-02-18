@@ -32,6 +32,10 @@ public class SplitFile extends File {
 		super(pathname);
 
 	}
+	
+	/**
+	 * Divide il file in parti uguali(numero di parti fornite dall'utente)
+	 */
 
 	public void split(int parts) {
 		String FilePath = getAbsolutePath();
@@ -64,6 +68,11 @@ public class SplitFile extends File {
 
 	}
 
+	/**
+	 * Divide il file in parti a seconda della dimensione fornita dall'utente
+	 *
+	 */
+	
 	public void split(long dimParts[]) {
 
 		for (long part : dimParts) {
@@ -100,6 +109,10 @@ public class SplitFile extends File {
 
 	}
 
+	/**
+	 * Comprime le parti 
+	 */
+	
 	public void zipSplit(long dimParts[]) {
 		String FilePath = getAbsolutePath();
 		long leng = 0;
@@ -139,16 +152,13 @@ public class SplitFile extends File {
 		for (int i = 0; i < filesM.size(); i++) {
 			String zipFilePath = filesM.get(i).getAbsolutePath();
 			String destDir = zipFilePath.substring(0, zipFilePath.lastIndexOf(File.separator));
-			// System.out.println("filePath: " + zipFilePath);
-			// System.out.println("dir: " + destDir);
 			String nPart = zipFilePath.substring(zipFilePath.lastIndexOf('.') + 1);
 			String fileName = zipFilePath.substring(0, zipFilePath.lastIndexOf(".zip")) + "." + nPart;
 			File dir = new File(destDir);
-			// create output directory if it doesn't exist
+			// Crea la cartella se non esiste
 			if (!dir.exists())
 				dir.mkdirs();
 			FileInputStream fis;
-			// buffer for read and write data to file
 			byte[] buffer = new byte[1024];
 			try {
 				fis = new FileInputStream(zipFilePath);
@@ -183,6 +193,10 @@ public class SplitFile extends File {
 
 	}
 
+	/**
+	 * Cripta il file e lo divide in parti con dimensione uguale
+	 */
+	
 	public void cryptSplit(long partsDim) {
 
 		File inputFile = new File(getAbsolutePath());
@@ -215,6 +229,10 @@ public class SplitFile extends File {
 		encryFile.delete();
 
 	}
+	
+	/**
+	 * Da piu parti criptate genera un file in chiaro
+	 */
 
 	public void cryptMerge(String fileSelectedPath, int j) {
 		List<File> filesM = listOfFilesToMerge();
@@ -236,6 +254,10 @@ public class SplitFile extends File {
 
 	}
 
+	/**
+	 * Identifica le parti da fondere restituendo una lista che le contiene
+	 */
+	
 	public List<File> listOfFilesToMerge() {
 		String tmpName = getName();// {name}.{number}
 		String destFileName = tmpName.substring(0, tmpName.lastIndexOf('.'));
@@ -275,7 +297,9 @@ public class SplitFile extends File {
 		Arrays.sort(filesList);// ensuring order 001, 002, ..., 010, ...
 		return Arrays.asList(filesList);
 	}
-
+	/**
+	 * Fonde le parti in un unico  file
+	 */
 	public static void mergeFiles(List<File> files, File into, int crypt) {
 		boolean flag = true;
 		if (crypt == 0) {

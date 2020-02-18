@@ -13,7 +13,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Classe che si occupa della criptazione o decriptazione di file
+ * Classe che si occupa della criptazione e decriptazione di file
  */
 
 public class CryptUtils {
@@ -22,16 +22,21 @@ public class CryptUtils {
 
 	private static final String KEY = "Very good key!!!"; //Deve essere di 16bit
 
+	/**
+	 * Cripta il file in input generando un nuovo file
+	 */
 	public static void encrypt(File inputFile, File outputFile) throws Exception {
 		doCrypto(Cipher.ENCRYPT_MODE, inputFile, outputFile);
 	}
-
+	/**
+	 * Decripta il file in input generando un nuovo file
+	 */
 	public static void decrypt(File inputFile, File outputFile) throws Exception {
 		doCrypto(Cipher.DECRYPT_MODE, inputFile, outputFile);
 	}
 
 	/**
-	 * Cripta o decripta un il file in input generando un file output(a seconda dei
+	 * Cripta o decripta il file in input generandone uno in output(a seconda dei
 	 * parametri)
 	 */
 	private static void doCrypto(int cipherMode, File inputFile, File outputFile) throws Exception {
