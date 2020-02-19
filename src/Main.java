@@ -9,7 +9,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		MainFrame frame = new MainFrame("File splitter");
-		GuiController controller = new GuiController(frame);
+		MainController controller = new MainController(frame);
 		frame.pack();
 		frame.setLocationRelativeTo(null); // centra la finestra
 		frame.setVisible(true);

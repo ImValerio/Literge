@@ -52,12 +52,13 @@ public class MainFrame extends JFrame {
 	protected JTable table;
 	private JProgressBar pbar;
 	protected ButtonGroup modeG;
+	protected JPanel panel;
 
 	public MainFrame(String title) {
 		super(title);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		JPanel fieldsPanel = new JPanel();
 		JPanel btnPanel = new JPanel();
 		JPanel unitPanel = new JPanel();
@@ -105,7 +106,6 @@ public class MainFrame extends JFrame {
 		split.setSelected(true);
 		fileName.setEnabled(false);
 		add(btnPanel, BorderLayout.NORTH);
-		// btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
 		btnPanel.setLayout(new GridLayout(0, 2));
 		btnPanel.add(choose);
 		btnPanel.add(start);
@@ -134,12 +134,7 @@ public class MainFrame extends JFrame {
 		fieldsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 		fieldsPanel.add(header);
 		fieldsPanel.add(scrollPane);
-		panel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				modeG.clearSelection();
-			}
-		});
+
 
 
 	}
@@ -197,6 +192,10 @@ public class MainFrame extends JFrame {
 
 	public ButtonGroup getModeG() {
 		return modeG;
+	}
+	
+	public JPanel getPanel() {
+		return panel;
 	}
 
 	public void clearFields() {

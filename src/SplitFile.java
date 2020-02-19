@@ -214,7 +214,7 @@ public class SplitFile extends File {
 
 		
 
-		encryFile.split(GuiController.getDimArray(encryFile, dim));
+		encryFile.split(MainController.getDimArray(encryFile, dim));
 		encryFile.delete();
 
 	}

@@ -34,7 +34,6 @@ import javax.swing.table.TableModel;
 
 @SuppressWarnings("serial")
 public class InfoFrame extends MainFrame {
-	private JPanel panel;
 	private MyButton save;
 
 	public InfoFrame(String title) {
@@ -92,16 +91,10 @@ public class InfoFrame extends MainFrame {
 
 		fieldsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-
 	}
-	public JPanel getPanel() {
-		return panel;
-	}
-
+	
 	public MyButton getSave() {
 		return save;
 	}
 	
-	
-
 }

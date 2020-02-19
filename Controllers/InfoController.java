@@ -16,8 +16,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
 /**
- * Classe che gestisce l'interazione con la gui 
- * associata al frame contenente informazioni del job
+ * Classe che gestisce l'interazione con la gui associata al frame contenente
+ * informazioni del job
  * 
  * @author Valerio Valletta
  *
@@ -30,9 +30,8 @@ public class InfoController {
 	public InfoController(InfoFrame frame, int row, JTable jTable) {
 		this.frame = frame;
 		this.row = row;
-		
-		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 
+		frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 
 		JRadioButton split = frame.getSplit();
 		JRadioButton merge = frame.getMerge();
@@ -42,15 +41,13 @@ public class InfoController {
 		JTextField fileSize = frame.getFileSize();
 		JTextField fileParts = frame.getFileParts();
 
-		
-
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent we) {
 				frame.dispose();
 				TableModel dm = jTable.getModel();
 				((AbstractTableModel) dm).fireTableDataChanged();
 			}
-		}); 
+		});
 
 		frame.getPanel().addMouseListener(new MouseAdapter() {
 			@Override
@@ -143,9 +140,16 @@ public class InfoController {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				modifyJob();
-				
+
 			}
 
+		});
+
+		frame.getPanel().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				frame.getModeG().clearSelection();
+			}
 		});
 	}
 
@@ -154,8 +158,6 @@ public class InfoController {
 	 */
 	public void fillFields() {
 		Job tmp = Main.queue.get(row);
-		System.out.println(tmp.getParts()+" "+Main.getHumanLength(tmp.getFile().length()));
-
 		if (tmp.getDim() > 0)
 			frame.getFileSize().setText("" + tmp.getDim());
 		if (tmp.getParts() > 0)
@@ -254,7 +256,7 @@ public class InfoController {
 					return;
 				}
 			}
-			
+
 			Main.queue.set(row, tmp);
 		}
 	}

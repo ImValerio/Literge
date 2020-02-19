@@ -22,11 +22,11 @@ import javax.swing.table.TableModel;
  *
  */
 
-public class GuiController {
+public class MainController {
 
 	private MainFrame frame;
 
-	public GuiController(MainFrame frame) {
+	public MainController(MainFrame frame) {
 		this.frame = frame;
 
 		JRadioButton split = frame.getSplit();
@@ -123,6 +123,13 @@ public class GuiController {
 					fileParts.setEnabled(true);
 					fileSize.setEnabled(false);
 				}
+			}
+		});
+		
+		frame.getPanel().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				frame.getModeG().clearSelection();
 			}
 		});
 
@@ -273,7 +280,6 @@ public class GuiController {
 	public void caseHandler() {
 		frame.getPbar().setValue(0);
 		int valueSingleJob = (100 / (Main.queueIndex));
-		System.out.println(valueSingleJob);
 		for (int j = 0; j < Main.queue.size(); j++) {
 
 			Job tmp = Main.queue.get(j);
