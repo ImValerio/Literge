@@ -47,14 +47,7 @@ public class MyTableModel extends AbstractTableModel {
 		case 0:
 			return tmp.getFile().getName();
 		case 1:
-			if (Main.getDimMb(tmp.getFile().length()) > 0) {
-				return Main.getDimMb(tmp.getFile().length()) + "Mb";
-			}
-			if (Main.getDimKb(tmp.getFile().length()) > 0) {
-				return Main.getDimKb(tmp.getFile().length()) + "Kb";
-			} else {
-				return tmp.getFile().length() + " Byte";
-			}
+			return Main.getHumanLength(tmp.getFile().length());
 
 		case 2:
 			String info = "";

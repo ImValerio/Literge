@@ -195,9 +195,10 @@ public class SplitFile extends File {
 
 	/**
 	 * Cripta il file e lo divide in parti con dimensione uguale
+	 * @param dim 
 	 */
 	
-	public void cryptSplit(long partsDim) {
+	public void cryptSplit(long dim) {
 
 		File inputFile = new File(getAbsolutePath());
 		SplitFile encryFile = new SplitFile(getAbsolutePath() + ".crypt");
@@ -211,21 +212,9 @@ public class SplitFile extends File {
 			e.printStackTrace();
 		}
 
-		long dimFile = encryFile.length();
-		int parts = (int) (dimFile / partsDim);
-		// System.out.println(f.length());
-		long dim[] = new long[parts];
-		for (int i = 0; i < parts; i++) {
-			if (i != (parts - 1)) {
-				long s = partsDim;
-				dim[i] = s;
-				dimFile -= s;
-			} else {
-				dim[i] = dimFile;
-			}
-		}
+		
 
-		encryFile.split(dim);
+		encryFile.split(GuiController.getDimArray(encryFile, dim));
 		encryFile.delete();
 
 	}
@@ -275,7 +264,6 @@ public class SplitFile extends File {
 		int indexFile[] = new int[tmpList.length];
 		int count = 0;
 		for (int i = 0; i < tmpList.length; i++) {
-			// System.out.println(tmpList[i]);
 			try {
 
 				if (tmpList[i].getName().substring(0, tmpName.lastIndexOf('.')).equals(destFileName)

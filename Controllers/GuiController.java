@@ -165,6 +165,8 @@ public class GuiController {
 				int col = frame.getTable().columnAtPoint(evt.getPoint());
 				int row = frame.getTable().rowAtPoint(evt.getPoint());
 				if (col == 4) {
+					if(!Main.queue.get(row).isCompleted())
+						Main.queueIndex--;
 					Main.queue.remove(row);
 					TableModel dm = frame.getTable().getModel();
 					((AbstractTableModel) dm).fireTableDataChanged();
@@ -270,12 +272,6 @@ public class GuiController {
 
 	public void caseHandler() {
 		frame.getPbar().setValue(0);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} // TODO Errore divisione per zero
-		System.out.println("Queue size: " + Main.queue.size() + " index: " + Main.queueIndex);
 		int valueSingleJob = (100 / (Main.queueIndex));
 		System.out.println(valueSingleJob);
 		for (int j = 0; j < Main.queue.size(); j++) {
@@ -316,12 +312,12 @@ public class GuiController {
 				if (tmp.getMode(0)) {
 
 					if (tmp.getMode(1)) {
-						long dim[] = getDimArray(f, tmp);
+						long dim[] = getDimArray(f, tmp.getDim());
 						f.zipSplit(dim);
 
 					}
 					if (tmp.getMode(2)) {
-
+						long dim[] = getDimArray(f, tmp.getDim());
 						f.cryptSplit(tmp.getDim());
 					}
 					if (tmp.getParts() > 0) {
@@ -330,7 +326,7 @@ public class GuiController {
 					}
 					if (tmp.getDim() > 0 && (!tmp.getMode(1) && !tmp.getMode(2))) {
 
-						long dim[] = getDimArray(f, tmp);
+						long dim[] = getDimArray(f, tmp.getDim());
 
 						f.split(dim);
 
@@ -354,15 +350,15 @@ public class GuiController {
 	 * Restituisce un array contente le dimensioni di ogni parte che verra' creata
 	 */
 
-	long[] getDimArray(SplitFile f, Job tmp) {
+	public static long[] getDimArray(SplitFile f, long dimPart) {
 		long dimFile = f.length();
-		int parts = (int) (dimFile / tmp.getDim());
-		if ((dimFile % tmp.getDim()) >= 1)
+		int parts = (int) (dimFile / dimPart);
+		if ((dimFile % dimPart) >= 1)
 			parts++;
 		long dim[] = new long[parts];
 		for (int i = 0; i < parts; i++) {
 			if (i != (parts - 1)) {
-				long s = tmp.getDim();
+				long s = dimPart;
 				dim[i] = s;
 				dimFile -= s;
 			} else {

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +15,16 @@ public class Main {
 		frame.setVisible(true);
 	}
 
-	public static long getDimKb(long a) {
+	public static double getDimKb(long a) {
 		return a / 1024;
 	}
 
-	public static long getDimMb(long a) {
+	public static double getDimMb(long a) {
+		
 		return getDimKb(a) / 1024;
 	}
 
-	public static long getDimGb(long a) {
+	public static double getDimGb(long a) {
 		return getDimMb(a) / 1024;
 	}
 
@@ -33,19 +35,19 @@ public class Main {
 	 */
 
 	public static String getHumanLength(long d) {
-		String length = "";
-		if (Main.getDimGb(d) > 0) {
-			length += ", " + Main.getDimGb(d) + "Mb";
+		DecimalFormat df = new DecimalFormat("#.#");
+		if (Main.getDimGb(d) > 0.99) {
+			return df.format(Main.getDimGb(d)) + "Gb";
 		}
-		if (Main.getDimMb(d) > 0) {
-			length += ", " + Main.getDimMb(d) + "Mb";
+		if (Main.getDimMb(d) > 0.99) {
+			return df.format(Main.getDimMb(d)) + "Mb";
 		}
-		if (Main.getDimKb(d) > 0) {
-			length += Main.getDimKb(d) + "Kb";
+		if (Main.getDimKb(d) > 0.99) {
+			return Main.getDimKb(d) + "Kb";
 		} else {
-			length += d + " Byte";
+			return d + " Byte";
 		}
 
-		return length;
+		
 	}
 }

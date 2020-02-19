@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -66,11 +67,11 @@ public class InfoFrame extends MainFrame {
 		split.setSelected(true);
 		fileName.setEnabled(false);
 		add(btnPanel, BorderLayout.NORTH);
-		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
+		btnPanel.setLayout(new GridLayout(0, 2));
 		btnPanel.add(choose);
 		btnPanel.add(save);
 		add(panel, BorderLayout.CENTER);
-		panel.add(Box.createRigidArea(new Dimension(25, 25)));
+		panel.add(Box.createRigidArea(new Dimension(55, 25)));
 		panel.add(split, BorderLayout.WEST);
 		panel.add(Box.createRigidArea(new Dimension(20, 0)));
 		panel.add(zip, BorderLayout.WEST);
