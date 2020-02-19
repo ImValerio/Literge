@@ -174,6 +174,7 @@ public class MainController {
 				if (col == 4) {
 					if(!Main.queue.get(row).isCompleted())
 						Main.tmpQueueLength--;
+					System.out.println("File in coda =>"+Main.tmpQueueLength);
 					Main.queue.remove(row);
 					TableModel dm = frame.getTable().getModel();
 					((AbstractTableModel) dm).fireTableDataChanged();
@@ -278,6 +279,7 @@ public class MainController {
 	 */
 
 	public void caseHandler() {
+		System.out.println("File in coda =>"+Main.tmpQueueLength);
 		frame.getPbar().setValue(0);
 		int valueSingleJob = (100 / (Main.tmpQueueLength));
 		for (int j = 0; j < Main.queue.size(); j++) {
@@ -293,6 +295,11 @@ public class MainController {
 						f.cryptMerge(fileSelectedPath, j);
 						frame.clearFields();
 						tmp.setStatus("Completed");
+						tmp.setCompleted(true);
+						if(frame.getPbar().getValue() < 100) {
+							frame.getPbar().setValue(100);
+						}
+						Main.tmpQueueLength = 0;
 						TableModel dm = frame.getTable().getModel();
 						((AbstractTableModel) dm).fireTableDataChanged();
 						frame.getPbar().setValue(frame.getPbar().getValue() + valueSingleJob);
@@ -341,7 +348,7 @@ public class MainController {
 			}
 			frame.clearFields();
 			tmp.setStatus("Completed");
-
+			tmp.setCompleted(true);
 			TableModel dm = frame.getTable().getModel();
 			((AbstractTableModel) dm).fireTableDataChanged();
 			frame.getPbar().setValue(frame.getPbar().getValue() + valueSingleJob);

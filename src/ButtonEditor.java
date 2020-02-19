@@ -28,10 +28,6 @@ public class ButtonEditor extends DefaultCellEditor {
 	}
 
 	public Component getTableCellEditorComponent( Object value, boolean isSelected, int row, int column) {
-		Main.queue.remove(row);
-		TableModel dm = table.getModel();
-		((AbstractTableModel) dm).fireTableDataChanged();
-		frame.pack();
 		return button;
 	}
 
