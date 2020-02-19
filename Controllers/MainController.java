@@ -199,7 +199,7 @@ public class MainController {
 
 			for (int i = 0; i < files.length; i++) {
 				String fileSelectedPath = files[i].getAbsolutePath();
-				SplitFile f = new SplitFile(fileSelectedPath);
+				Literge f = new Literge(fileSelectedPath);
 				Job tmp = new Job(f);
 				if (frame.getMerge().isSelected()) {
 
@@ -286,7 +286,7 @@ public class MainController {
 			if (!tmp.isCompleted()) {
 
 				String fileSelectedPath = Main.queue.get(j).getFile().getAbsolutePath();
-				SplitFile f = new SplitFile(fileSelectedPath);
+				Literge f = new Literge(fileSelectedPath);
 
 				if (!tmp.getMode(0)) {
 					if (tmp.getMode(2)) {
@@ -302,9 +302,9 @@ public class MainController {
 					if (tmp.getMode(1)) {
 
 						f.unZipSplit();
-						f = new SplitFile(f.getAbsolutePath().replace(".zip", ""));
+						f = new Literge(f.getAbsolutePath().replace(".zip", ""));
 					}
-					SplitFile c = new SplitFile(
+					Literge c = new Literge(
 							fileSelectedPath.substring(0, fileSelectedPath.lastIndexOf(File.separator)) + File.separator
 									+ Main.queue.get(j).getOutFileName()); // Creo il file finale con il suo path
 																			// associato
@@ -312,7 +312,7 @@ public class MainController {
 					for (File fx : filesM) {
 						System.out.println(fx.getName());
 					}
-					SplitFile.mergeFiles(filesM, c, 0);
+					Literge.mergeFiles(filesM, c, 0);
 
 				}
 				if (tmp.getMode(0)) {
@@ -356,7 +356,7 @@ public class MainController {
 	 * Restituisce un array contente le dimensioni di ogni parte che verra' creata
 	 */
 
-	public static long[] getDimArray(SplitFile f, long dimPart) {
+	public static long[] getDimArray(Literge f, long dimPart) {
 		long dimFile = f.length();
 		int parts = (int) (dimFile / dimPart);
 		if ((dimFile % dimPart) >= 1)

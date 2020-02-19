@@ -18,7 +18,7 @@ public class Main {
 	public static int tmpQueueLength = 0;
 	
 	public static void main(String[] args) throws IOException {
-		MainFrame frame = new MainFrame("File splitter");
+		MainFrame frame = new MainFrame("Literge");
 		MainController controller = new MainController(frame);
 		frame.pack();
 		frame.setLocationRelativeTo(null); // centra la finestra

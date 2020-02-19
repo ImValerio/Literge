@@ -26,9 +26,9 @@ import javax.swing.JOptionPane;
  */
 
 @SuppressWarnings("serial")
-public class SplitFile extends File {
+public class Literge extends File {
 
-	public SplitFile(String pathname) {
+	public Literge(String pathname) {
 		super(pathname);
 
 	}
@@ -201,7 +201,7 @@ public class SplitFile extends File {
 	public void cryptSplit(long dim) {
 
 		File inputFile = new File(getAbsolutePath());
-		SplitFile encryFile = new SplitFile(getAbsolutePath() + ".crypt");
+		Literge encryFile = new Literge(getAbsolutePath() + ".crypt");
 
 		System.out.println(getAbsolutePath());
 
@@ -228,9 +228,9 @@ public class SplitFile extends File {
 		for (File x : filesM) {
 			System.out.println(x);
 		}
-		SplitFile cryptFile = new SplitFile(fileSelectedPath.substring(0, fileSelectedPath.lastIndexOf(File.separator))
+		Literge cryptFile = new Literge(fileSelectedPath.substring(0, fileSelectedPath.lastIndexOf(File.separator))
 				+ File.separator + Main.queue.get(j).getOutFileName() + ".crypt");
-		SplitFile.mergeFiles(filesM, cryptFile, 1);
+		Literge.mergeFiles(filesM, cryptFile, 1);
 		File resFile = new File(cryptFile.getAbsolutePath().replace(".crypt", ""));
 		try {
 			CryptUtils.decrypt(cryptFile, resFile);
