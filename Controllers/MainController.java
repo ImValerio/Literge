@@ -98,7 +98,7 @@ public class MainController {
 					fileName.setEnabled(false);
 					fileParts.setEnabled(false);
 					fileSize.setEnabled(true);
-				}	
+				}
 
 			}
 
@@ -125,7 +125,7 @@ public class MainController {
 				}
 			}
 		});
-		
+
 		frame.getPanel().addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
@@ -152,16 +152,19 @@ public class MainController {
 				if (e.getClickCount() == 2) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
-					InfoFrame iframe = new InfoFrame(Main.queue.get(row).getFile().getName());
-					InfoController iframeCtrl = new InfoController(iframe, row, frame.getTable());
-					iframe.pack();
-					Point point = frame.getLocationOnScreen();
-					iframe.setLocation(new Point(point.x - frame.getWidth() / 2, point.y));// Visualizza il frame sopra
-																							// a
-					// quello principale
-					iframeCtrl.fillFields();
-					iframe.setVisible(true);
+					if (!Main.queue.get(row).isCompleted()) {
+						InfoFrame iframe = new InfoFrame(Main.queue.get(row).getFile().getName());
+						InfoController iframeCtrl = new InfoController(iframe, row, frame.getTable());
+						iframe.pack();
+						Point point = frame.getLocationOnScreen();
+						iframe.setLocation(new Point(point.x - frame.getWidth() / 2, point.y));// Visualizza il frame
+																								// sopra
+																								// a
+						// quello principale
+						iframeCtrl.fillFields();
+						iframe.setVisible(true);
 
+					}
 				}
 			}
 		});
@@ -172,9 +175,8 @@ public class MainController {
 				int col = frame.getTable().columnAtPoint(evt.getPoint());
 				int row = frame.getTable().rowAtPoint(evt.getPoint());
 				if (col == 4) {
-					if(!Main.queue.get(row).isCompleted())
+					if (!Main.queue.get(row).isCompleted())
 						Main.tmpQueueLength--;
-					System.out.println("File in coda =>"+Main.tmpQueueLength);
 					Main.queue.remove(row);
 					TableModel dm = frame.getTable().getModel();
 					((AbstractTableModel) dm).fireTableDataChanged();
@@ -279,9 +281,8 @@ public class MainController {
 	 */
 
 	public void caseHandler() {
-		System.out.println("File in coda =>"+Main.tmpQueueLength);
 		frame.getPbar().setValue(0);
-		int valueSingleJob = (100 / (Main.tmpQueueLength));
+		int valueSingleJob = (100 / Main.tmpQueueLength);
 		for (int j = 0; j < Main.queue.size(); j++) {
 
 			Job tmp = Main.queue.get(j);
@@ -296,7 +297,7 @@ public class MainController {
 						frame.clearFields();
 						tmp.setStatus("Completed");
 						tmp.setCompleted(true);
-						if(frame.getPbar().getValue() < 100) {
+						if (frame.getPbar().getValue() < 100) {
 							frame.getPbar().setValue(100);
 						}
 						Main.tmpQueueLength = 0;
@@ -311,10 +312,10 @@ public class MainController {
 						f.unZipSplit();
 						f = new Literge(f.getAbsolutePath().replace(".zip", ""));
 					}
-					Literge c = new Literge(
-							fileSelectedPath.substring(0, fileSelectedPath.lastIndexOf(File.separator)) + File.separator
-									+ Main.queue.get(j).getOutFileName()); // Creo il file finale con il suo path
-																			// associato
+					Literge c = new Literge(fileSelectedPath.substring(0, fileSelectedPath.lastIndexOf(File.separator))
+							+ File.separator + Main.queue.get(j).getOutFileName()); // Creo il file finale con il suo
+																					// path
+																					// associato
 					List<File> filesM = f.listOfFilesToMerge();
 					for (File fx : filesM) {
 						System.out.println(fx.getName());
@@ -353,7 +354,7 @@ public class MainController {
 			((AbstractTableModel) dm).fireTableDataChanged();
 			frame.getPbar().setValue(frame.getPbar().getValue() + valueSingleJob);
 		}
-		if(frame.getPbar().getValue() < 100) {
+		if (frame.getPbar().getValue() < 100) {
 			frame.getPbar().setValue(100);
 		}
 		Main.tmpQueueLength = 0;
