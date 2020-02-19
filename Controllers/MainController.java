@@ -98,7 +98,7 @@ public class MainController {
 					fileName.setEnabled(false);
 					fileParts.setEnabled(false);
 					fileSize.setEnabled(true);
-				}
+				}	
 
 			}
 
@@ -173,7 +173,7 @@ public class MainController {
 				int row = frame.getTable().rowAtPoint(evt.getPoint());
 				if (col == 4) {
 					if(!Main.queue.get(row).isCompleted())
-						Main.queueIndex--;
+						Main.tmpQueueLength--;
 					Main.queue.remove(row);
 					TableModel dm = frame.getTable().getModel();
 					((AbstractTableModel) dm).fireTableDataChanged();
@@ -211,7 +211,7 @@ public class MainController {
 					}
 					tmp.setOutFileName(frame.getFileName().getText());
 					Main.queue.add(0, tmp);
-					Main.queueIndex++;
+					Main.tmpQueueLength++;
 					TableModel dm = frame.getTable().getModel();
 					((AbstractTableModel) dm).fireTableDataChanged();
 
@@ -262,7 +262,7 @@ public class MainController {
 					}
 
 					Main.queue.add(0, tmp);
-					Main.queueIndex++;
+					Main.tmpQueueLength++;
 					TableModel dm = frame.getTable().getModel();
 					((AbstractTableModel) dm).fireTableDataChanged();
 
@@ -279,7 +279,7 @@ public class MainController {
 
 	public void caseHandler() {
 		frame.getPbar().setValue(0);
-		int valueSingleJob = (100 / (Main.queueIndex));
+		int valueSingleJob = (100 / (Main.tmpQueueLength));
 		for (int j = 0; j < Main.queue.size(); j++) {
 
 			Job tmp = Main.queue.get(j);
@@ -349,7 +349,7 @@ public class MainController {
 		if(frame.getPbar().getValue() < 100) {
 			frame.getPbar().setValue(100);
 		}
-		Main.queueIndex = 0;
+		Main.tmpQueueLength = 0;
 	}
 
 	/**

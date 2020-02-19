@@ -3,9 +3,19 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author valeriovalletta
+ *
+ */
 public class Main {
+	/**
+	 * Coda dei Job 
+	 */
 	public static List<Job> queue = new ArrayList<Job>();
-	public static int queueIndex = 0;
+	/**
+	 * Numero dei Job da completare
+	 */
+	public static int tmpQueueLength = 0;
 	
 	public static void main(String[] args) throws IOException {
 		MainFrame frame = new MainFrame("File splitter");
