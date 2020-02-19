@@ -26,7 +26,9 @@ public class ButtonEditor extends DefaultCellEditor {
 		this.table = table;
 		this.frame = frame;
 	}
-
+	/**
+	 * Metodo che permette di eliminare un elemento dalla coda(dalla tabella visualmente) per Windows
+	 */
 	public Component getTableCellEditorComponent( Object value, boolean isSelected, int row, int column) {
 		Main.queue.remove(row);
 		TableModel dm = table.getModel();
